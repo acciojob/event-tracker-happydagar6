@@ -1,1 +1,80 @@
+* {
+  box-sizing: border-box;
+}
 
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.app-container {
+  width: 900px;
+  max-width: calc(100% - 24px);
+  margin: 16px auto;
+}
+
+.filter-container {
+  margin-bottom: 12px;
+}
+
+.btn {
+  padding: 6px 12px;
+  margin-right: 8px;
+  border: 1px solid #999;
+  background: #fff;
+  cursor: pointer;
+}
+
+.calendar-wrap {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.mm-popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mm-popup {
+  width: 320px;
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 12px;
+}
+
+.mm-popup__header h2 {
+  margin: 0 0 8px;
+  font-size: 18px;
+}
+
+.event-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.event-form input {
+  padding: 6px;
+  border: 1px solid #bbb;
+}
+
+.mm-popup__box__footer__right-space {
+  margin-top: 10px;
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.mm-popup__btn,
+.mm-popup__btn--info,
+.mm-popup__btn--danger,
+.mm-popup__btn--close {
+  padding: 6px 10px;
+  border: 1px solid #999;
+  background: #fff;
+  cursor: pointer;
+}
