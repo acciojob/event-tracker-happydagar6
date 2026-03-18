@@ -72,7 +72,7 @@ body {
 .mm-popup__btn,
 .mm-popup__btn--info,
 .mm-popup__btn--danger,
-.mm-popup__btn--close {
+.popup-close {
   padding: 6px 10px;
   border: 1px solid #999;
   background: #fff;

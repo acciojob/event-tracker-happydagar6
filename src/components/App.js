@@ -10,6 +10,7 @@ export default function App() {
   const [events, setEvents] = useState([]);
   const [filter, setFilter] = useState("all");
   const [showPopup, setShowPopup] = useState(false);
+  const [popupMode, setPopupMode] = useState("create");
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [formData, setFormData] = useState({ title: "", location: "" });
@@ -26,6 +27,7 @@ export default function App() {
     setSelectedDate(slotInfo.start);
     setSelectedEvent(null);
     setFormData({ title: "", location: "" });
+    setPopupMode("create");
     setShowPopup(true);
   };
 
@@ -40,7 +42,7 @@ export default function App() {
   const handleSaveEvent = () => {
     if (!formData.title || !selectedDate) return;
 
-    if (selectedEvent) {
+    if (popupMode === "edit" && selectedEvent) {
       setEvents(
         events.map(event =>
           event.id === selectedEvent.id
@@ -61,6 +63,7 @@ export default function App() {
     }
 
     setShowPopup(false);
+    setPopupMode("create");
     setFormData({ title: "", location: "" });
     setSelectedEvent(null);
   };
@@ -68,14 +71,22 @@ export default function App() {
   const handleDeleteEvent = () => {
     setEvents(events.filter(event => event.id !== selectedEvent.id));
     setShowPopup(false);
+    setPopupMode("create");
     setFormData({ title: "", location: "" });
     setSelectedEvent(null);
   };
 
   const handleSelectEvent = (event) => {
     setSelectedEvent(event);
+    setSelectedDate(event.start);
     setFormData({ title: event.title, location: event.location });
+    setPopupMode("options");
     setShowPopup(true);
+  };
+
+  const handleOpenEdit = () => {
+    if (!selectedEvent) return;
+    setPopupMode("edit");
   };
 
   const getFilteredEvents = () => {
@@ -138,48 +149,53 @@ export default function App() {
             </div>
             <div className="mm-popup__box">
               <div className="event-form">
-                <input
-                  type="text"
-                  name="title"
-                  placeholder="Event Title"
-                  value={formData.title}
-                  onChange={handleFormChange}
-                />
-                <input
-                  type="text"
-                  name="location"
-                  placeholder="Event Location"
-                  value={formData.location}
-                  onChange={handleFormChange}
-                />
+                {popupMode !== "options" && (
+                  <>
+                    <input
+                      type="text"
+                      name="title"
+                      placeholder="Event Title"
+                      value={formData.title}
+                      onChange={handleFormChange}
+                    />
+                    <input
+                      type="text"
+                      name="location"
+                      placeholder="Event Location"
+                      value={formData.location}
+                      onChange={handleFormChange}
+                    />
+                  </>
+                )}
               </div>
 
               <div className="mm-popup__box__footer__right-space">
-                {selectedEvent && (
+                {popupMode === "options" && (
                   <button
-                    className="mm-popup__btn mm-popup__btn--info"
-                    onClick={handleSaveEvent}
+                    className="mm-popup__btn--info"
+                    onClick={handleOpenEdit}
                   >
                     Edit
                   </button>
                 )}
-                {selectedEvent && (
+                {popupMode === "options" && (
                   <button
-                    className="mm-popup__btn mm-popup__btn--danger"
+                    className="mm-popup__btn--danger"
                     onClick={handleDeleteEvent}
                   >
                     Delete
                   </button>
                 )}
-                {!selectedEvent && (
+                {(popupMode === "create" || popupMode === "edit") && (
                   <button className="mm-popup__btn" onClick={handleSaveEvent}>
                     Save
                   </button>
                 )}
                 <button
-                  className="mm-popup__btn mm-popup__btn--close"
+                  className="popup-close"
                   onClick={() => {
                     setShowPopup(false);
+                    setPopupMode("create");
                     setFormData({ title: "", location: "" });
                     setSelectedEvent(null);
                   }}
