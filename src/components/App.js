@@ -31,6 +31,14 @@ export default function App() {
     setShowPopup(true);
   };
 
+  const handleOpenCreatePopup = () => {
+    setSelectedDate(selectedDate || new Date());
+    setSelectedEvent(null);
+    setFormData({ title: "", location: "" });
+    setPopupMode("create");
+    setShowPopup(true);
+  };
+
   const handleFormChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
@@ -113,15 +121,10 @@ export default function App() {
   return (
     <div className="app-container">
       <div className="filter-container">
-        <button className="btn" onClick={() => setFilter("all")}>
-          All
-        </button>
-        <button className="btn" onClick={() => setFilter("past")}>
-          Past
-        </button>
-        <button className="btn" onClick={() => setFilter("upcoming")}>
-          Upcoming
-        </button>
+        <div><button className="btn" onClick={handleOpenCreatePopup}>Create Event</button></div>
+        <div><button className="btn" onClick={() => setFilter("all")}>All</button></div>
+        <div><button className="btn" onClick={() => setFilter("past")}>Past</button></div>
+        <div><button className="btn" onClick={() => setFilter("upcoming")}>Upcoming</button></div>
       </div>
 
       <div className="calendar-wrap">

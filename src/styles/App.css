@@ -14,12 +14,13 @@ body {
 }
 
 .filter-container {
+  display: flex;
+  gap: 8px;
   margin-bottom: 12px;
 }
 
 .btn {
   padding: 6px 12px;
-  margin-right: 8px;
   border: 1px solid #999;
   background: #fff;
   cursor: pointer;
